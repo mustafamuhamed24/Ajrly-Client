@@ -1,0 +1,335 @@
+{
+    "translation": {
+        "websiteName": "أجرلى",
+        "home": "الرئيسية",
+        "about": "من نحن",
+        "services": "خدماتنا",
+        "contact": "اتصل بنا",
+        "language": "اللغة",
+        "arabic": "العربية",
+        "english": "الإنجليزية",
+        "properties": {
+            "title": "ابحث عن منزلك القادم",
+            "location": "الموقع",
+            "minPrice": "الحد الأدنى للسعر",
+            "maxPrice": "الحد الأقصى للسعر",
+            "bedrooms": "غرف النوم",
+            "type": "نوع العقار",
+            "allTypes": "جميع الأنواع",
+            "types": {
+                "apartment": "شقة",
+                "villa": "فيلا",
+                "house": "منزل",
+                "condo": "شقة تمليك"
+            },
+            "viewDetails": "عرض تفاصيل",
+            "noImage": "لا توجد صورة",
+            "featured": "مميز",
+            "list": "العقارات"
+        },
+        "bookings": "الحجوزات",
+        "dashboard": {
+            "title": "لوحة التحكم",
+            "addNewProperty": "إضافة عقار جديد",
+            "totalProperties": "إجمالي العقارات",
+            "activeProperties": "العقارات النشطة",
+            "totalBookings": "إجمالي الحجوزات",
+            "totalRevenue": "إجمالي الإيرادات",
+            "properties": "العقارات",
+            "searchPlaceholder": "البحث بالرقم أو العنوان...",
+            "propertyId": "رقم العقار",
+            "propertyTitle": "العنوان",
+            "propertyType": "النوع",
+            "propertyPrice": "السعر",
+            "propertyStatus": "الحالة",
+            "actions": "الإجراءات",
+            "edit": "تعديل",
+            "delete": "حذف",
+            "confirmDelete": "تأكيد الحذف",
+            "deleteConfirmation": "هل أنت متأكد من حذف هذا العقار؟ لا يمكن التراجع عن هذا الإجراء.",
+            "cancel": "إلغاء",
+            "deleteButton": "حذف"
+        },
+        "dashboardPage": {
+            "welcome": "مرحباً",
+            "overview": "نظرة عامة",
+            "totalProperties": "إجمالي العقارات",
+            "activeBookings": "الحجوزات النشطة",
+            "totalRevenue": "إجمالي الإيرادات",
+            "recentActivity": "النشاط الأخير",
+            "viewAll": "عرض الكل",
+            "noRecentActivity": "لا يوجد نشاط حديث",
+            "upcomingBookings": "الحجوزات القادمة",
+            "noUpcomingBookings": "لا توجد حجوزات قادمة"
+        },
+        "signIn": "تسجيل الدخول",
+        "signUp": "إنشاء حساب",
+        "quickLinks": "روابط سريعة",
+        "footerDescription": "منصتكم الموثوقة للعثور على العقار المثالي وحجزه لإقامتكم.",
+        "auth": {
+            "login": "تسجيل الدخول",
+            "register": "إنشاء حساب",
+            "email": "البريد الإلكتروني",
+            "password": "كلمة المرور",
+            "confirmPassword": "تأكيد كلمة المرور",
+            "name": "الاسم الكامل",
+            "phone": "رقم الهاتف",
+            "forgotPassword": "نسيت كلمة المرور؟",
+            "rememberMe": "تذكرني",
+            "noAccount": "ليس لديك حساب؟",
+            "haveAccount": "لديك حساب بالفعل؟",
+            "signUpNow": "سجل الآن",
+            "signInNow": "سجل دخولك الآن",
+            "resetPassword": "إعادة تعيين كلمة المرور",
+            "sendResetLink": "إرسال رابط إعادة التعيين",
+            "continueWithGoogle": "المتابعة باستخدام جوجل",
+            "nameRequired": "الاسم مطلوب",
+            "emailRequired": "البريد الإلكتروني مطلوب",
+            "phoneRequired": "رقم الهاتف مطلوب",
+            "passwordRequired": "كلمة المرور مطلوبة",
+            "confirmPasswordRequired": "يرجى تأكيد كلمة المرور",
+            "passwordTooShort": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+            "passwordsDoNotMatch": "كلمات المرور غير متطابقة",
+            "loginSuccess": "مرحباً بعودتك!",
+            "registerSuccess": "تم إنشاء الحساب بنجاح!"
+        },
+        "landing": {
+            "hero": {
+                "title": "ابحث عن إقامتك المثالية",
+                "subtitle": "اكتشف واحجز عقارات فريدة حول العالم",
+                "searchPlaceholder": "إلى أين تريد الذهاب؟",
+                "searchButton": "بحث"
+            },
+            "about": {
+                "description": "نحن منصة رائدة تربط بين ملاك العقارات والمسافرين، نقدم تجربة حجز سلسة وخدمة استثنائية."
+            },
+            "features": {
+                "title": "لماذا تختارنا",
+                "feature1": {
+                    "title": "اختيار واسع",
+                    "description": "اختر من بين آلاف العقارات حول العالم"
+                },
+                "feature2": {
+                    "title": "أفضل الأسعار",
+                    "description": "احصل على أفضل العروض والأسعار التنافسية"
+                },
+                "feature3": {
+                    "title": "حجز آمن",
+                    "description": "عملية حجز آمنة ومضمونة"
+                }
+            },
+            "plans": {
+                "title": "اختر خطتك",
+                "subtitle": "اختر الخطة المثالية لاحتياجات إدراج عقارك",
+                "basic": {
+                    "title": "الخطة الأساسية",
+                    "description": "مثالية للبدء",
+                    "features": {
+                        "search": "بحث أساسي عن العقارات",
+                        "photos": "حتى 5 صور",
+                        "dashboard": "لوحة تحكم أساسية"
+                    },
+                    "price": "مجاناً",
+                    "button": "ابدأ الآن"
+                },
+                "featured": {
+                    "title": "الخطة المميزة",
+                    "description": "الخيار الأكثر شعبية",
+                    "features": {
+                        "priority": "إدراج ذو أولوية",
+                        "badge": "شارة مميزة",
+                        "analytics": "تحليلات أساسية"
+                    },
+                    "price": "29$ شهرياً",
+                    "button": "اختر الخطة"
+                },
+                "premium": {
+                    "title": "الخطة المتميزة",
+                    "description": "لملاك العقارات الجادين",
+                    "features": {
+                        "top": "في أعلى نتائج البحث",
+                        "promotion": "ترويج على وسائل التواصل الاجتماعي",
+                        "analytics": "تحليلات متقدمة"
+                    },
+                    "price": "99$ شهرياً",
+                    "button": "اختر الخطة"
+                }
+            },
+            "popularDestinations": {
+                "title": "الوجهات الشائعة",
+                "viewAll": "عرض جميع الوجهات"
+            },
+            "testimonials": {
+                "title": "ماذا يقول عملاؤنا",
+                "readMore": "اقرأ المزيد من التقييمات"
+            }
+        },
+        "property": {
+            "details": "تفاصيل العقار",
+            "amenities": "المرافق",
+            "location": "الموقع",
+            "reviews": "التقييمات",
+            "bookNow": "احجز الآن",
+            "pricePerNight": "لليلة الواحدة",
+            "checkIn": "تاريخ الوصول",
+            "checkOut": "تاريخ المغادرة",
+            "guests": "الضيوف",
+            "bedrooms": "غرفة نوم",
+            "bathrooms": "حمام",
+            "description": "الوصف",
+            "host": "المضيف",
+            "contactHost": "اتصل بالمضيف",
+            "similarProperties": "عقارات مشابهة",
+            "area": "قدم مربع"
+        },
+        "propertyDetails": {
+            "title": "تفاصيل العقار",
+            "description": "الوصف",
+            "pricePerNight": "السعر لليلة الواحدة",
+            "bedrooms": "غرف النوم",
+            "bathrooms": "الحمامات",
+            "area": "المساحة",
+            "location": "الموقع",
+            "amenities": "المرافق",
+            "bookProperty": "احجز هذا العقار",
+            "bookingSummary": "ملخص الحجز",
+            "checkIn": "تاريخ الوصول",
+            "checkOut": "تاريخ المغادرة",
+            "totalNights": "إجمالي الليالي",
+            "totalAmount": "المبلغ الإجمالي",
+            "requiredDeposit": "الوديعة المطلوبة (25%)",
+            "selectPaymentMethod": "اختر طريقة الدفع",
+            "payWithVodafoneCash": "الدفع بواسطة فودافون كاش",
+            "payWithMizza": "الدفع بواسطة ميزة",
+            "processingPayment": "جاري معالجة الدفع...",
+            "chatWithOwner": "الدردشة مع المالك",
+            "loginToChat": "يرجى تسجيل الدخول للدردشة مع مالك العقار",
+            "contactInfo": "معلومات الاتصال"
+        },
+        "booking": {
+            "title": "تفاصيل الحجز",
+            "status": {
+                "pending": "قيد الانتظار",
+                "confirmed": "مؤكد",
+                "cancelled": "ملغي",
+                "completed": "مكتمل"
+            },
+            "payment": {
+                "title": "تفاصيل الدفع",
+                "total": "المبلغ الإجمالي",
+                "deposit": "الوديعة",
+                "balance": "الرصيد المتبقي"
+            }
+        },
+        "common": {
+            "loading": "جاري التحميل...",
+            "error": "حدث خطأ",
+            "success": "تم بنجاح",
+            "save": "حفظ",
+            "cancel": "إلغاء",
+            "delete": "حذف",
+            "edit": "تعديل",
+            "view": "عرض",
+            "back": "رجوع",
+            "next": "التالي",
+            "submit": "إرسال",
+            "search": "بحث",
+            "filter": "تصفية",
+            "sort": "ترتيب",
+            "noResults": "لم يتم العثور على نتائج",
+            "required": "مطلوب",
+            "optional": "اختياري",
+            "or": "أو"
+        },
+        "profile": {
+            "title": "الملف الشخصي",
+            "settings": "الإعدادات",
+            "notifications": "الإشعارات",
+            "language": "اللغة",
+            "logout": "تسجيل الخروج",
+            "myProfile": "الملف الشخصي",
+            "accountSettings": "إعدادات الحساب",
+            "preferences": "التفضيلات",
+            "security": "الأمان",
+            "help": "المساعدة والدعم",
+            "notFound": "الملف الشخصي غير موجود",
+            "pleaseLogin": "يرجى تسجيل الدخول مرة أخرى",
+            "profileImage": "الصورة الشخصية",
+            "changeImage": "تغيير الصورة الشخصية",
+            "bookingStats": "إحصائيات الحجوزات",
+            "totalBookings": "إجمالي الحجوزات",
+            "upcomingBookings": "الحجوزات القادمة",
+            "cancelledBookings": "الحجوزات الملغاة",
+            "newPassword": "كلمة المرور الجديدة (اتركها فارغة للإبقاء على كلمة المرور الحالية)"
+        },
+        "notifications": {
+            "title": "الإشعارات",
+            "markAllRead": "تحديد الكل كمقروء",
+            "noNotifications": "لا توجد إشعارات جديدة",
+            "viewAll": "عرض جميع الإشعارات"
+        },
+        "addProperty": {
+            "title": "إضافة عقار جديد",
+            "details": "تفاصيل العقار",
+            "titlePlaceholder": "عنوان العقار",
+            "descriptionPlaceholder": "الوصف",
+            "typePlaceholder": "اختر نوع العقار",
+            "types": {
+                "apartment": "شقة",
+                "villa": "فيلا",
+                "house": "منزل",
+                "condo": "شقة فاخرة",
+                "studio": "استوديو",
+                "duplex": "دوبلكس"
+            },
+            "pricePlaceholder": "السعر (دولار)",
+            "bedroomsPlaceholder": "عدد غرف النوم",
+            "bathroomsPlaceholder": "عدد الحمامات",
+            "areaPlaceholder": "المساحة (متر مربع)",
+            "location": "الموقع",
+            "addressPlaceholder": "العنوان",
+            "cityPlaceholder": "المدينة",
+            "statePlaceholder": "المحافظة",
+            "countryPlaceholder": "الدولة",
+            "amenities": "المرافق",
+            "amenitiesList": {
+                "wifi": "واي فاي",
+                "parking": "موقف سيارات",
+                "pool": "مسبح",
+                "gym": "صالة رياضية",
+                "airConditioning": "تكييف هواء",
+                "balcony": "شرفة",
+                "elevator": "مصعد",
+                "petFriendly": "مسموح بالحيوانات",
+                "furnished": "مفروش"
+            },
+            "images": "الصور",
+            "maxImages": "الحد الأقصى 5 صور.",
+            "uploading": "جاري الرفع... {{progress}}٪",
+            "addButton": "إضافة العقار",
+            "adding": "جاري الإضافة...",
+            "failed": "فشل في إضافة العقار",
+            "propertiesList": "العقارات",
+            "searchPlaceholder": "البحث بالرقم أو العنوان...",
+            "uniqueId": "رقم العقار",
+            "title": "العنوان",
+            "type": "النوع",
+            "price": "السعر",
+            "status": "الحالة",
+            "bedrooms": "غرف النوم",
+            "bathrooms": "الحمامات",
+            "area": "المساحة",
+            "city": "المدينة",
+            "amenities": "المرافق",
+            "actions": "الإجراءات",
+            "edit": "تعديل",
+            "delete": "حذف",
+            "image": "الصورة",
+            "noImage": "لا توجد صورة",
+            "statuses": {
+                "active": "نشط",
+                "inactive": "غير نشط"
+            }
+        }
+    }
+}

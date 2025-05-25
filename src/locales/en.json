@@ -1,0 +1,336 @@
+{
+    "translation": {
+        "websiteName": "أجرلى",
+        "home": "Home",
+        "about": "About",
+        "services": "Services",
+        "contact": "Contact",
+        "language": "Language",
+        "arabic": "Arabic",
+        "english": "English",
+        "properties": "Properties",
+        "bookings": "Bookings",
+        "dashboard": {
+            "title": "Admin Dashboard",
+            "addNewProperty": "Add New Property",
+            "totalProperties": "Total Properties",
+            "activeProperties": "Active Properties",
+            "totalBookings": "Total Bookings",
+            "totalRevenue": "Total Revenue",
+            "properties": "Properties",
+            "searchPlaceholder": "Search by ID or title...",
+            "propertyId": "Property ID",
+            "propertyTitle": "Title",
+            "propertyType": "Type",
+            "propertyPrice": "Price",
+            "propertyStatus": "Status",
+            "actions": "Actions",
+            "edit": "Edit",
+            "delete": "Delete",
+            "confirmDelete": "Confirm Delete",
+            "deleteConfirmation": "Are you sure you want to delete this property? This action cannot be undone.",
+            "cancel": "Cancel",
+            "deleteButton": "Delete"
+        },
+        "dashboardPage": {
+            "welcome": "Welcome",
+            "overview": "Overview",
+            "totalProperties": "Total Properties",
+            "activeBookings": "Active Bookings",
+            "totalRevenue": "Total Revenue",
+            "recentActivity": "Recent Activity",
+            "viewAll": "View All",
+            "noRecentActivity": "No recent activity",
+            "upcomingBookings": "Upcoming Bookings",
+            "noUpcomingBookings": "No upcoming bookings"
+        },
+        "signIn": "Sign in",
+        "signUp": "Sign up",
+        "quickLinks": "Quick Links",
+        "footerDescription": "Your trusted platform for finding and booking the perfect property for your stay.",
+        "auth": {
+            "login": "Login",
+            "register": "Register",
+            "email": "Email",
+            "password": "Password",
+            "confirmPassword": "Confirm Password",
+            "name": "Full Name",
+            "phone": "Phone Number",
+            "forgotPassword": "Forgot Password?",
+            "rememberMe": "Remember Me",
+            "noAccount": "Don't have an account?",
+            "haveAccount": "Already have an account?",
+            "signUpNow": "Sign up now",
+            "signInNow": "Sign in now",
+            "resetPassword": "Reset Password",
+            "sendResetLink": "Send Reset Link",
+            "continueWithGoogle": "Continue with Google",
+            "nameRequired": "Name is required",
+            "emailRequired": "Email is required",
+            "phoneRequired": "Phone number is required",
+            "passwordRequired": "Password is required",
+            "confirmPasswordRequired": "Please confirm your password",
+            "passwordTooShort": "Password must be at least 6 characters",
+            "passwordsDoNotMatch": "Passwords do not match",
+            "loginSuccess": "Welcome back!",
+            "registerSuccess": "Account created successfully!"
+        },
+        "landing": {
+            "hero": {
+                "title": "Find Your Perfect Stay",
+                "subtitle": "Discover and book unique properties around the world",
+                "searchPlaceholder": "Where do you want to go?",
+                "searchButton": "Search"
+            },
+            "about": {
+                "description": "We are a leading platform connecting property owners with travelers, offering a seamless booking experience and exceptional service."
+            },
+            "features": {
+                "title": "Why Choose Us",
+                "feature1": {
+                    "title": "Wide Selection",
+                    "description": "Choose from thousands of properties worldwide"
+                },
+                "feature2": {
+                    "title": "Best Prices",
+                    "description": "Get the best deals and competitive prices"
+                },
+                "feature3": {
+                    "title": "Secure Booking",
+                    "description": "Safe and secure booking process"
+                }
+            },
+            "plans": {
+                "title": "Choose Your Plan",
+                "subtitle": "Select the perfect plan for your property listing needs",
+                "basic": {
+                    "title": "Basic Plan",
+                    "description": "Perfect for getting started",
+                    "features": {
+                        "search": "Basic property search",
+                        "photos": "Up to 5 photos",
+                        "dashboard": "Basic dashboard"
+                    },
+                    "price": "Free",
+                    "button": "Get Started"
+                },
+                "featured": {
+                    "title": "Featured Plan",
+                    "description": "Most popular choice",
+                    "features": {
+                        "priority": "Priority listing",
+                        "badge": "Featured badge",
+                        "analytics": "Basic analytics"
+                    },
+                    "price": "$29/month",
+                    "button": "Choose Plan"
+                },
+                "premium": {
+                    "title": "Premium Plan",
+                    "description": "For serious property owners",
+                    "features": {
+                        "top": "Top of search results",
+                        "promotion": "Social media promotion",
+                        "analytics": "Advanced analytics"
+                    },
+                    "price": "$99/month",
+                    "button": "Choose Plan"
+                }
+            },
+            "popularDestinations": {
+                "title": "Popular Destinations",
+                "viewAll": "View All Destinations"
+            },
+            "testimonials": {
+                "title": "What Our Customers Say",
+                "readMore": "Read More Reviews"
+            }
+        },
+        "property": {
+            "details": "Property Details",
+            "amenities": "Amenities",
+            "location": "Location",
+            "reviews": "Reviews",
+            "bookNow": "Book Now",
+            "pricePerNight": "per night",
+            "checkIn": "Check-in",
+            "checkOut": "Check-out",
+            "guests": "Guests",
+            "bedrooms": "beds",
+            "bathrooms": "baths",
+            "description": "Description",
+            "host": "Host",
+            "contactHost": "Contact Host",
+            "similarProperties": "Similar Properties",
+            "area": "sq ft"
+        },
+        "propertyDetails": {
+            "title": "Property Details",
+            "description": "Description",
+            "pricePerNight": "Price per night",
+            "bedrooms": "Bedrooms",
+            "bathrooms": "Bathrooms",
+            "area": "Area",
+            "location": "Location",
+            "amenities": "Amenities",
+            "bookProperty": "Book This Property",
+            "bookingSummary": "Booking Summary",
+            "checkIn": "Check-in",
+            "checkOut": "Check-out",
+            "totalNights": "Total nights",
+            "totalAmount": "Total amount",
+            "requiredDeposit": "Required deposit (25%)",
+            "selectPaymentMethod": "Select your payment method",
+            "payWithVodafoneCash": "Pay with Vodafone Cash",
+            "payWithMizza": "Pay with Mizza",
+            "processingPayment": "Processing your payment...",
+            "chatWithOwner": "Chat with Owner",
+            "loginToChat": "Please login to chat with the property owner",
+            "contactInfo": "Contact Information"
+        },
+        "booking": {
+            "title": "Booking Details",
+            "status": {
+                "pending": "Pending",
+                "confirmed": "Confirmed",
+                "cancelled": "Cancelled",
+                "completed": "Completed"
+            },
+            "payment": {
+                "title": "Payment Details",
+                "total": "Total Amount",
+                "deposit": "Deposit",
+                "balance": "Balance Due"
+            }
+        },
+        "common": {
+            "loading": "Loading...",
+            "error": "An error occurred",
+            "success": "Success",
+            "save": "Save",
+            "cancel": "Cancel",
+            "delete": "Delete",
+            "edit": "Edit",
+            "view": "View",
+            "back": "Back",
+            "next": "Next",
+            "submit": "Submit",
+            "search": "Search",
+            "filter": "Filter",
+            "sort": "Sort",
+            "noResults": "No results found",
+            "required": "Required",
+            "optional": "Optional",
+            "or": "or"
+        },
+        "profile": {
+            "title": "Profile",
+            "settings": "Settings",
+            "notifications": "Notifications",
+            "language": "Language",
+            "logout": "Logout",
+            "myProfile": "My Profile",
+            "accountSettings": "Account Settings",
+            "preferences": "Preferences",
+            "security": "Security",
+            "help": "Help & Support",
+            "notFound": "Profile Not Found",
+            "pleaseLogin": "Please try logging in again.",
+            "profileImage": "Profile Image",
+            "changeImage": "Change profile image",
+            "bookingStats": "Your Booking Stats",
+            "totalBookings": "Total Bookings",
+            "upcomingBookings": "Upcoming",
+            "cancelledBookings": "Cancelled",
+            "newPassword": "New Password (leave blank to keep current)"
+        },
+        "notifications": {
+            "title": "Notifications",
+            "markAllRead": "Mark all as read",
+            "noNotifications": "No new notifications",
+            "viewAll": "View all notifications"
+        },
+        "addProperty": {
+            "title": "Add New Property",
+            "details": "Property Details",
+            "titlePlaceholder": "Property Title",
+            "descriptionPlaceholder": "Description",
+            "typePlaceholder": "Select Property Type",
+            "types": {
+                "apartment": "Apartment",
+                "villa": "Villa",
+                "house": "House",
+                "condo": "Condo",
+                "studio": "Studio",
+                "duplex": "Duplex"
+            },
+            "pricePlaceholder": "Price (USD)",
+            "bedroomsPlaceholder": "Number of Bedrooms",
+            "bathroomsPlaceholder": "Number of Bathrooms",
+            "areaPlaceholder": "Area (sq m)",
+            "location": "Location",
+            "addressPlaceholder": "Address",
+            "cityPlaceholder": "City",
+            "statePlaceholder": "State",
+            "countryPlaceholder": "Country",
+            "amenities": "Amenities",
+            "amenitiesList": {
+                "wifi": "Wi-Fi",
+                "parking": "Parking",
+                "pool": "Swimming Pool",
+                "gym": "Gym",
+                "airConditioning": "Air Conditioning",
+                "balcony": "Balcony",
+                "elevator": "Elevator",
+                "petFriendly": "Pet Friendly",
+                "furnished": "Furnished"
+            },
+            "images": "Images",
+            "maxImages": "Maximum 5 images allowed.",
+            "uploading": "Uploading... {{progress}}%",
+            "addButton": "Add Property",
+            "adding": "Adding...",
+            "failed": "Failed to create property",
+            "propertiesList": "Properties",
+            "searchPlaceholder": "Search by Unique ID or Title...",
+            "uniqueId": "Property ID",
+            "title": "Title",
+            "type": "Type",
+            "price": "Price",
+            "status": "Status",
+            "bedrooms": "Bedrooms",
+            "bathrooms": "Bathrooms",
+            "area": "Area",
+            "city": "City",
+            "amenities": "Amenities",
+            "actions": "Actions",
+            "edit": "Edit",
+            "delete": "Delete",
+            "image": "Image",
+            "noImage": "No image",
+            "statuses": {
+                "active": "Active",
+                "inactive": "Inactive"
+            }
+        },
+        "properties": {
+            "title": "Find Your Next Home",
+            "location": "Location",
+            "minPrice": "Min Price",
+            "maxPrice": "Max Price",
+            "bedrooms": "Bedrooms",
+            "type": "Property Type",
+            "allTypes": "All Types",
+            "types": {
+                "apartment": "Apartment",
+                "villa": "Villa",
+                "house": "House",
+                "condo": "Condo"
+            },
+            "viewDetails": "View details for",
+            "noImage": "No image",
+            "featured": "Featured",
+            "list": "Properties"
+        }
+    }
+}
