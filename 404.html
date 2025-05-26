@@ -4,13 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Redirecting...</title>
 </head>
 
 <body>
     <!-- public/404.    html -->
     <script>
-        window.location.replace('/Ajrly-Client' + window.location.pathname);
+        // Get the pathname from the current URL
+        const path = window.location.pathname;
+
+        // Check if we're already on the correct path
+        if (!path.includes('/Ajrly-Client')) {
+            // Redirect to the correct path
+            window.location.replace('/Ajrly-Client' + path);
+        } else {
+            // If we're already on the correct path, redirect to index
+            window.location.replace('/Ajrly-Client/');
+        }
     </script>
 </body>
 
