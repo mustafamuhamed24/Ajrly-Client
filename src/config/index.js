@@ -38,7 +38,7 @@ export const API_ENDPOINTS = {
     PAYMENT_WEBHOOK: '/payments/webhook'
 };
 
-export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://ajrly-backend-production.up.railway.app/api';
 
 export const PAYMENT_METHODS = {
     VODAFONE_CASH: 'vodafone_cash',
