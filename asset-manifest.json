@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/Ajrly-Client/static/css/main.19d7b74f.css",
-    "main.js": "/Ajrly-Client/static/js/main.96b6515a.js",
+    "main.js": "/Ajrly-Client/static/js/main.a2ae8fc4.js",
     "static/js/488.8fe59974.chunk.js": "/Ajrly-Client/static/js/488.8fe59974.chunk.js",
     "service-worker.js": "/Ajrly-Client/service-worker.js",
     "index.html": "/Ajrly-Client/index.html",
     "main.19d7b74f.css.map": "/Ajrly-Client/static/css/main.19d7b74f.css.map",
-    "main.96b6515a.js.map": "/Ajrly-Client/static/js/main.96b6515a.js.map",
+    "main.a2ae8fc4.js.map": "/Ajrly-Client/static/js/main.a2ae8fc4.js.map",
     "488.8fe59974.chunk.js.map": "/Ajrly-Client/static/js/488.8fe59974.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.19d7b74f.css",
-    "static/js/main.96b6515a.js"
+    "static/js/main.a2ae8fc4.js"
   ]
 }
