@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/Ajrly-Client/static/css/main.8b3578a9.css",
-    "main.js": "/Ajrly-Client/static/js/main.8c97770b.js",
+    "main.css": "/Ajrly-Client/static/css/main.df0c3217.css",
+    "main.js": "/Ajrly-Client/static/js/main.84e16251.js",
     "static/js/488.8fe59974.chunk.js": "/Ajrly-Client/static/js/488.8fe59974.chunk.js",
     "service-worker.js": "/Ajrly-Client/service-worker.js",
     "index.html": "/Ajrly-Client/index.html",
-    "main.8b3578a9.css.map": "/Ajrly-Client/static/css/main.8b3578a9.css.map",
-    "main.8c97770b.js.map": "/Ajrly-Client/static/js/main.8c97770b.js.map",
+    "main.df0c3217.css.map": "/Ajrly-Client/static/css/main.df0c3217.css.map",
+    "main.84e16251.js.map": "/Ajrly-Client/static/js/main.84e16251.js.map",
     "488.8fe59974.chunk.js.map": "/Ajrly-Client/static/js/488.8fe59974.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.8b3578a9.css",
-    "static/js/main.8c97770b.js"
+    "static/css/main.df0c3217.css",
+    "static/js/main.84e16251.js"
   ]
 }
