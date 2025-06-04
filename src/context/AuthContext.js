@@ -33,7 +33,9 @@ export const AuthProvider = ({ children }) => {
 
         try {
             const response = await axios.get(`${API_BASE_URL}/auth/me`);
-            setUser(response.data);
+            const userData = response.data.user || response.data;
+            userData._id = userData._id || userData.id;
+            setUser(userData);
             setError(null);
         } catch (err) {
             console.error('Auth check failed:', err);
@@ -52,9 +54,11 @@ export const AuthProvider = ({ children }) => {
                 email,
                 password
             });
-            const { token: newToken, ...userData } = response.data;
+            const { token: newToken, ...rest } = response.data;
             localStorage.setItem('token', newToken);
             setToken(newToken);
+            const userData = rest.user || rest;
+            userData._id = userData._id || userData.id;
             setUser(userData);
             setError(null);
             return userData;
@@ -67,12 +71,13 @@ export const AuthProvider = ({ children }) => {
     const register = async (userData) => {
         try {
             const response = await axios.post(`${API_BASE_URL}/auth/register`, userData);
-            const { token: newToken, ...user } = response.data;
+            const { token: newToken, ...rest } = response.data;
             localStorage.setItem('token', newToken);
-            setToken(newToken);
-            setUser(user);
+            const userObj = rest.user || rest;
+            userObj._id = userObj._id || userObj.id;
+            setUser(userObj);
             setError(null);
-            return user;
+            return userObj;
         } catch (err) {
             setError(err.response?.data?.message || 'Registration failed');
             throw err;
@@ -101,7 +106,9 @@ export const AuthProvider = ({ children }) => {
         login,
         register,
         logout,
-        isAuthenticated: !!user
+        isAuthenticated: !!user,
+        isAdmin: user?.role === 'admin',
+        isOwner: user?.role === 'owner'
     };
 
     return (

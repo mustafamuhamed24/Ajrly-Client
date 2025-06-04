@@ -120,7 +120,7 @@ const Dashboard = () => {
                 <div className="flex justify-between items-center mb-8">
                     <h1 className="text-3xl font-bold text-gray-900">{t('dashboard.title')}</h1>
                     <Link
-                        to="/admin/properties/add"
+                        to="/owner/properties/add"
                         className="inline-flex items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     >
                         <FaPlus className={`h-5 w-5 ${i18n.language === 'ar' ? 'ml-3' : 'mr-3'}`} />
@@ -260,7 +260,7 @@ const Dashboard = () => {
                                         <td className={`px-6 py-4 whitespace-nowrap text-base font-medium ${i18n.language === 'ar' ? 'text-right' : 'text-left'}`}>
                                             <div className={`flex ${i18n.language === 'ar' ? 'space-x-reverse space-x-3' : 'space-x-3'}`}>
                                                 <Link
-                                                    to={`/admin/properties/${property._id}/edit`}
+                                                    to={`/owner/properties/${property._id}/edit`}
                                                     className="text-blue-600 hover:text-blue-900"
                                                 >
                                                     <FaEdit className="h-5 w-5" />

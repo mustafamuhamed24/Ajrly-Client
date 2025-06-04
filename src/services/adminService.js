@@ -61,8 +61,11 @@ export const adminService = {
             });
             return response.data;
         } catch (error) {
-            console.error('Error updating property:', error.response?.data || error.message);
-            throw new Error(error.response?.data?.message || 'Failed to update property');
+            console.error('Error updating property:', error.response?.data || error);
+            if (error.response?.status === 500) {
+                throw new Error('Server error: Please try again later or contact support');
+            }
+            throw new Error(error.response?.data?.message || 'Failed to update property. Please check your input and try again.');
         }
     },
 

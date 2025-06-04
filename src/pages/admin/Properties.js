@@ -136,17 +136,7 @@ const Properties = () => {
     };
 
     const handleEdit = (property) => {
-        setForm({
-            ...property,
-            price: property.price.toString(),
-            area: property.area.toString(),
-            bedrooms: property.bedrooms.toString(),
-            bathrooms: property.bathrooms.toString()
-        });
-        setEditId(property._id);
-        setPreviewUrls(property.images || []);
-        setSelectedImages([]); // Reset selected images
-        setShowForm(true);
+        navigate(`/owner/properties/${property._id}/edit`);
     };
 
     const handleDelete = async (id) => {

@@ -158,7 +158,7 @@ const PropertyDetails = () => {
         try {
             const chat = await createOrGetChat(property._id, property.owner._id);
             setActiveChat(chat);
-            window.dispatchEvent(new Event('openChatWidget'));
+            navigate('/chat');
         } catch (err) {
             toast.error('Failed to start chat');
         }

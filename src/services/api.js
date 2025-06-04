@@ -53,9 +53,11 @@ export const propertyService = {
 export const bookingService = {
     createBooking: (bookingData) => api.post('/bookings', bookingData),
     getUserBookings: () => api.get('/bookings/list'),
+    getOwnerBookings: () => api.get('/bookings/owner'),
     getBookingById: (id) => api.get(`/bookings/${id}`),
     getPropertyBookings: (propertyId) => api.get(`/properties/${propertyId}/bookings`),
     cancelBooking: (id) => api.put(`/bookings/${id}/cancel`),
+    updateBookingStatus: (id, status) => api.put(`/bookings/${id}/status`, { status }),
     processPayment: (bookingId, paymentData) => api.post(`/bookings/${bookingId}/payment`, paymentData),
     deleteBooking: (id) => api.delete(`/bookings/${id}`)
 };

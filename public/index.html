@@ -1,18 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/Logo2.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="description" content="Web site created using create-react-app" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/Logo.png" />
-    <!--
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%PUBLIC_URL%/Logo2.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description"
+    content="أجرلى - منصة عقارية متكاملة للإيجار. ابحث عن عقارات للإيجار أو قم بإضافة عقارك للإيجار. شقق، منازل، محلات، ومكاتب للإيجار في مصر" />
+  <meta name="keywords"
+    content="عقارات للإيجار, شقق للإيجار, منازل للإيجار, محلات للإيجار, مكاتب للإيجار, إيجار عقارات مصر, إضافة عقار للإيجار, عقارات مصر" />
+  <meta name="author" content="أجرلى" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="أجرلى - منصة عقارية للإيجار" />
+  <meta property="og:description"
+    content="منصة عقارية متكاملة للإيجار. ابحث عن عقارات للإيجار أو قم بإضافة عقارك للإيجار. شقق، منازل، محلات، ومكاتب للإيجار في مصر" />
+  <meta property="og:image" content="%PUBLIC_URL%/Logo2.png" />
+  <meta property="og:url" content="https://ajrly.com" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/Logo.png" />
+  <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <base href="%PUBLIC_URL%/">
+  <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -21,12 +34,45 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>أجرلى</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "RealEstateAgent",
+      "name": "أجرلى",
+      "url": "https://ajrly.com",
+      "description": "منصة عقارية متكاملة للإيجار في مصر",
+      "areaServed": {
+        "@type": "Country",
+        "name": "Egypt"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "EG"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://ajrly.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      },
+      "offers": {
+        "@type": "AggregateOffer",
+        "itemOffered": {
+          "@type": "RealEstateListing",
+          "name": "عقارات للإيجار"
+        }
+      }
+    }
+  </script>
+
+  <title>أجرلى - منصة عقارية للإيجار | شقق، منازل، محلات، ومكاتب للإيجار</title>
+</head>
+
+<body>
+  <noscript>يجب تفعيل JavaScript لتشغيل هذا التطبيق.</noscript>
+  <div id="root"></div>
+  <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -36,5 +82,6 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-  </body>
+</body>
+
 </html>

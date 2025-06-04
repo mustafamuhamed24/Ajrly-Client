@@ -69,7 +69,7 @@ const Login = () => {
                     </h2>
                     <p className="mt-2 text-sm text-gray-600">
                         {t('auth.noAccount')}{' '}
-                        <Link to="/register" className="font-medium text-primary-600 hover:text-primary-500">
+                        <Link to="/signup" className="font-medium text-primary-600 hover:text-primary-500">
                             {t('auth.signUpNow')}
                         </Link>
                     </p>

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
@@ -17,11 +17,16 @@ import {
     LanguageIcon,
     Cog6ToothIcon,
     ShieldCheckIcon,
-    QuestionMarkCircleIcon
+    QuestionMarkCircleIcon,
+    ChatBubbleLeftRightIcon
 } from '@heroicons/react/24/outline';
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import API_BASE_URL from '../../config/apiConfig';
+import { useChat } from '../../context/ChatContext';
+import { useNotifications } from '../../context/NotificationContext';
+import { format } from 'date-fns';
+import { ar } from 'date-fns/locale';
 
 const Navbar = () => {
     const { user, logout } = useAuth();
@@ -30,11 +35,42 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-    const [notifications, setNotifications] = useState([]);
     const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
     const profileRef = useRef(null);
     const notificationsRef = useRef(null);
     const languageRef = useRef(null);
+    const { unreadCount: chatUnreadCount } = useChat();
+    const { notifications, unreadCount, markAsRead, markAllAsRead, clearNotifications } = useNotifications();
+
+    const getNotificationIcon = (type) => {
+        switch (type) {
+            case 'message':
+                return '💬';
+            case 'booking_request':
+                return '📝';
+            case 'booking_approved':
+                return '✅';
+            case 'booking_rejected':
+                return '❌';
+            default:
+                return '🔔';
+        }
+    };
+
+    const getNotificationTitle = (notification) => {
+        switch (notification.type) {
+            case 'message':
+                return `New message from ${notification.sender}`;
+            case 'booking_request':
+                return 'New booking request';
+            case 'booking_approved':
+                return 'Booking approved';
+            case 'booking_rejected':
+                return 'Booking rejected';
+            default:
+                return notification.title || 'New notification';
+        }
+    };
 
     const changeLanguage = (lng) => {
         i18n.changeLanguage(lng);
@@ -66,9 +102,8 @@ const Navbar = () => {
                 throw new Error('Invalid response type');
             }
             const data = await response.json();
-            setNotifications(data);
+            console.log('Navbar: chatNotifications', data);
         } catch (error) {
-            setNotifications([]);
             console.error('Error fetching notifications:', error);
         }
     };
@@ -123,7 +158,8 @@ const Navbar = () => {
         { name: t('home'), href: '/', icon: HomeIcon },
         { name: t('properties.list'), href: '/properties', icon: BuildingOfficeIcon },
         { name: t('bookings'), href: '/bookings', icon: CalendarIcon },
-        { name: t('dashboard.title'), href: '/admin', icon: ChartBarIcon }
+        ...(user?.role === 'owner' ? [{ name: t('dashboard.title'), href: '/owner', icon: ChartBarIcon }] : []),
+        { name: 'Messages', href: '/chat', icon: ChatBubbleLeftRightIcon }
     ];
     const fullNavigation = [...navigation];
 
@@ -170,6 +206,8 @@ const Navbar = () => {
         };
     }, []);
 
+    console.log('Navbar: chatNotifications', notifications);
+
     return (
         <nav className="bg-white shadow-lg">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -177,18 +215,25 @@ const Navbar = () => {
                     {/* Logo and main navigation */}
                     <div className="flex">
                         <Link to="/" className="flex-shrink-0 flex items-center">
-                            <img src="/Logo.png" alt="أجرلى" className="h-16 w-auto" />
+                            <img src="Logo.png" alt="أجرلى" className="h-16 w-auto" />
                         </Link>
                         <div className="hidden sm:ml-16 sm:flex sm:space-x-8">
                             {fullNavigation.map((item) => (
-                                <Link
+                                <NavLink
                                     key={item.name}
                                     to={item.href}
-                                    className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900"
+                                    className={({ isActive }) =>
+                                        `inline-flex items-center px-1 pt-1 text-sm font-medium transition-colors duration-200 ${isActive ? 'text-primary-600 font-bold border-b-2 border-primary-600' : 'text-gray-500 hover:text-gray-900'}`
+                                    }
                                 >
-                                    <item.icon className={`h-5 w-5 ${i18n.language === 'ar' ? 'ml-1' : 'mr-1'}`} />
+                                    <item.icon className={`h-5 w-5 ${i18n.language === 'ar' ? 'ml-1' : 'mr-1'} relative`} />
                                     {item.name}
-                                </Link>
+                                    {item.href === '/chat' && chatUnreadCount > 0 && (
+                                        <span className="absolute -top-1 -right-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-500 rounded-full">
+                                            {chatUnreadCount}
+                                        </span>
+                                    )}
+                                </NavLink>
                             ))}
                         </div>
                     </div>
@@ -211,7 +256,7 @@ const Navbar = () => {
                                 leaveFrom="transform opacity-100 scale-100"
                                 leaveTo="transform opacity-0 scale-95"
                             >
-                                <Menu.Items className={`origin-top-right absolute ${i18n.language === 'ar' ? 'left-0' : 'right-0'} mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50`}>
+                                <Menu.Items className={`origin-top-right absolute ${i18n.language === 'ar' ? 'sm:left-0 sm:right-auto left-2 right-2' : 'sm:right-0 sm:left-auto left-2 right-2'} mt-2 min-w-max max-w-sm rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50`}>
                                     <div className="py-1">
                                         <Menu.Item>
                                             {({ active }) => (
@@ -249,9 +294,9 @@ const Navbar = () => {
                                     className="p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                                 >
                                     <span className="sr-only">View notifications</span>
-                                    <BellIcon className="h-6 w-6" />
-                                    {notifications.length > 0 && (
-                                        <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-400 ring-2 ring-white" />
+                                    <BellIcon className="h-6 w-6 relative" />
+                                    {unreadCount > 0 && (
+                                        <span className="absolute -top-1 -right-1 inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold leading-none text-white bg-red-600 rounded-full">{unreadCount}</span>
                                     )}
                                 </Menu.Button>
                                 <Transition
@@ -263,22 +308,38 @@ const Navbar = () => {
                                     leaveFrom="transform opacity-100 scale-100"
                                     leaveTo="transform opacity-0 scale-95"
                                 >
-                                    <Menu.Items className={`origin-top-right absolute ${i18n.language === 'ar' ? 'left-0' : 'right-0'} mt-2 w-80 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50`}>
+                                    <Menu.Items className={`origin-top-right absolute ${i18n.language === 'ar' ? 'sm:left-0 sm:right-auto left-2 right-2' : 'sm:right-0 sm:left-auto left-2 right-2'} mt-2 min-w-max max-w-sm rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50`}>
                                         <div className="py-1">
                                             {notifications.length > 0 ? (
-                                                notifications.map((notification) => (
-                                                    <Menu.Item key={notification._id}>
-                                                        {({ active }) => (
-                                                            <div
-                                                                className={`${active ? 'bg-gray-50' : ''
-                                                                    } px-4 py-2 cursor-pointer`}
-                                                            >
-                                                                <p className="text-sm text-gray-900">{notification.message}</p>
-                                                                <p className="text-xs text-gray-500">{new Date(notification.createdAt).toLocaleDateString()}</p>
-                                                            </div>
-                                                        )}
-                                                    </Menu.Item>
-                                                ))
+                                                <>
+                                                    {notifications.map((notification) => (
+                                                        <Menu.Item key={notification.id}>
+                                                            {({ active }) => (
+                                                                <div
+                                                                    className={`${active ? 'bg-gray-50' : ''} px-4 py-2 cursor-pointer`}
+                                                                    onClick={() => markAsRead(notification.id)}
+                                                                >
+                                                                    <div className="flex items-start">
+                                                                        <span className="text-2xl mr-3">
+                                                                            {getNotificationIcon(notification.type)}
+                                                                        </span>
+                                                                        <div className="flex-1">
+                                                                            <p className="font-medium">
+                                                                                {getNotificationTitle(notification)}
+                                                                            </p>
+                                                                            <p className="text-xs text-gray-500 truncate">{notification.content}</p>
+                                                                            <p className="text-xs text-gray-400">{format(new Date(notification.timestamp), 'PPp', { locale: ar })}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            )}
+                                                        </Menu.Item>
+                                                    ))}
+                                                    <div className="px-4 py-2 text-right">
+                                                        <button onClick={markAllAsRead} className="text-xs text-blue-600 hover:underline">Mark all as read</button>
+                                                        <button onClick={clearNotifications} className="text-xs text-red-600 hover:underline">Clear all</button>
+                                                    </div>
+                                                </>
                                             ) : (
                                                 <div className="px-4 py-2 text-sm text-gray-500">{t('notifications.noNotifications')}</div>
                                             )}
@@ -294,7 +355,15 @@ const Navbar = () => {
                                 <Menu.Button
                                     className="flex items-center space-x-2 text-gray-500 hover:text-gray-900 focus:outline-none"
                                 >
-                                    <UserCircleIcon className="h-8 w-8" />
+                                    {user.profileImage ? (
+                                        <img
+                                            src={user.profileImage}
+                                            alt={user.name}
+                                            className="h-8 w-8 rounded-full object-cover"
+                                        />
+                                    ) : (
+                                        <UserCircleIcon className="h-8 w-8" />
+                                    )}
                                     <span className="text-sm font-medium">{user.name}</span>
                                 </Menu.Button>
                                 <Transition
@@ -308,17 +377,19 @@ const Navbar = () => {
                                 >
                                     <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
                                         <div className="py-1">
-                                            <Menu.Item>
-                                                {({ active }) => (
-                                                    <Link
-                                                        to="/admin"
-                                                        className={`${active ? 'bg-gray-100' : ''
-                                                            } block px-4 py-2 text-sm text-gray-700`}
-                                                    >
-                                                        {t('dashboard.title')}
-                                                    </Link>
-                                                )}
-                                            </Menu.Item>
+                                            {user?.role === 'owner' && (
+                                                <Menu.Item>
+                                                    {({ active }) => (
+                                                        <Link
+                                                            to="/owner"
+                                                            className={`${active ? 'bg-gray-100' : ''
+                                                                } block px-4 py-2 text-sm text-gray-700`}
+                                                        >
+                                                            {t('dashboard.title')}
+                                                        </Link>
+                                                    )}
+                                                </Menu.Item>
+                                            )}
                                             <Menu.Item>
                                                 {({ active }) => (
                                                     <Link
@@ -420,19 +491,129 @@ const Navbar = () => {
                 <div className="sm:hidden">
                     <div className="pt-2 pb-3 space-y-1">
                         {fullNavigation.map((item) => (
-                            <Link
+                            <NavLink
                                 key={item.name}
                                 to={item.href}
-                                className="flex items-center px-3 py-2 text-base font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-50"
+                                className={({ isActive }) =>
+                                    `flex items-center px-3 py-2 text-base font-medium transition-colors duration-200 ${isActive ? 'text-primary-600 font-bold bg-primary-50' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'}`
+                                }
                                 onClick={() => setIsOpen(false)}
                             >
-                                <item.icon className={`h-5 w-5 ${i18n.language === 'ar' ? 'ml-2' : 'mr-2'}`} />
+                                <item.icon className={`h-5 w-5 ${i18n.language === 'ar' ? 'ml-2' : 'mr-2'} relative`} />
                                 {item.name}
-                            </Link>
+                                {item.href === '/chat' && chatUnreadCount > 0 && (
+                                    <span className="ml-1 inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold leading-none text-white bg-red-600 rounded-full absolute -top-2 -right-2">{chatUnreadCount}</span>
+                                )}
+                            </NavLink>
                         ))}
                     </div>
                     {user ? (
                         <div className="pt-4 pb-3 border-t border-gray-200">
+                            {/* Mobile Language and Notifications */}
+                            <div className="flex items-center justify-between px-4 mb-4">
+                                <Menu as="div" className="relative" ref={languageRef}>
+                                    <Menu.Button
+                                        className="p-2 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                                        onClick={() => handleDropdownToggle('language')}
+                                    >
+                                        <GlobeAltIcon className="h-6 w-6" />
+                                    </Menu.Button>
+                                    <Transition
+                                        as={Fragment}
+                                        enter="transition ease-out duration-100"
+                                        enterFrom="transform opacity-0 scale-95"
+                                        enterTo="transform opacity-100 scale-100"
+                                        leave="transition ease-in duration-75"
+                                        leaveFrom="transform opacity-100 scale-100"
+                                        leaveTo="transform opacity-0 scale-95"
+                                    >
+                                        <Menu.Items className={`origin-top-right absolute ${i18n.language === 'ar' ? 'sm:left-0 sm:right-auto left-2 right-2' : 'sm:right-0 sm:left-auto left-2 right-2'} mt-2 min-w-max max-w-sm rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50`}>
+                                            <div className="py-1">
+                                                <Menu.Item>
+                                                    {({ active }) => (
+                                                        <button
+                                                            onClick={() => changeLanguage('en')}
+                                                            className={`${active ? 'bg-gray-100' : ''} ${i18n.language === 'en' ? 'text-primary-600 bg-primary-50' : 'text-gray-700'} block w-full text-left px-4 py-2 text-sm`}
+                                                        >
+                                                            {t('english')}
+                                                        </button>
+                                                    )}
+                                                </Menu.Item>
+                                                <Menu.Item>
+                                                    {({ active }) => (
+                                                        <button
+                                                            onClick={() => changeLanguage('ar')}
+                                                            className={`${active ? 'bg-gray-100' : ''} ${i18n.language === 'ar' ? 'text-primary-600 bg-primary-50' : 'text-gray-700'} block w-full text-left px-4 py-2 text-sm`}
+                                                        >
+                                                            {t('arabic')}
+                                                        </button>
+                                                    )}
+                                                </Menu.Item>
+                                            </div>
+                                        </Menu.Items>
+                                    </Transition>
+                                </Menu>
+
+                                <Menu as="div" className="relative" ref={notificationsRef}>
+                                    <Menu.Button
+                                        className="p-2 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                                        onClick={() => handleDropdownToggle('notifications')}
+                                    >
+                                        <BellIcon className="h-6 w-6 relative" />
+                                        {unreadCount > 0 && (
+                                            <span className="absolute -top-1 -right-1 inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold leading-none text-white bg-red-600 rounded-full">{unreadCount}</span>
+                                        )}
+                                    </Menu.Button>
+                                    <Transition
+                                        as={Fragment}
+                                        enter="transition ease-out duration-100"
+                                        enterFrom="transform opacity-0 scale-95"
+                                        enterTo="transform opacity-100 scale-100"
+                                        leave="transition ease-in duration-75"
+                                        leaveFrom="transform opacity-100 scale-100"
+                                        leaveTo="transform opacity-0 scale-95"
+                                    >
+                                        <Menu.Items className={`origin-top-right absolute ${i18n.language === 'ar' ? 'sm:left-0 sm:right-auto left-2 right-2' : 'sm:right-0 sm:left-auto left-2 right-2'} mt-2 min-w-max max-w-sm rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50`}>
+                                            <div className="py-1">
+                                                {notifications.length > 0 ? (
+                                                    <>
+                                                        {notifications.map((notification) => (
+                                                            <Menu.Item key={notification.id}>
+                                                                {({ active }) => (
+                                                                    <div
+                                                                        className={`${active ? 'bg-gray-50' : ''} px-4 py-2 cursor-pointer`}
+                                                                        onClick={() => markAsRead(notification.id)}
+                                                                    >
+                                                                        <div className="flex items-start">
+                                                                            <span className="text-2xl mr-3">
+                                                                                {getNotificationIcon(notification.type)}
+                                                                            </span>
+                                                                            <div className="flex-1">
+                                                                                <p className="font-medium">
+                                                                                    {getNotificationTitle(notification)}
+                                                                                </p>
+                                                                                <p className="text-xs text-gray-500 truncate">{notification.content}</p>
+                                                                                <p className="text-xs text-gray-400">{format(new Date(notification.timestamp), 'PPp', { locale: ar })}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+                                                            </Menu.Item>
+                                                        ))}
+                                                        <div className="px-4 py-2 text-right">
+                                                            <button onClick={markAllAsRead} className="text-xs text-blue-600 hover:underline">Mark all as read</button>
+                                                            <button onClick={clearNotifications} className="text-xs text-red-600 hover:underline">Clear all</button>
+                                                        </div>
+                                                    </>
+                                                ) : (
+                                                    <div className="px-4 py-2 text-sm text-gray-500">{t('notifications.noNotifications')}</div>
+                                                )}
+                                            </div>
+                                        </Menu.Items>
+                                    </Transition>
+                                </Menu>
+                            </div>
+
                             <div className="flex items-center px-4">
                                 <UserCircleIcon className="h-10 w-10 text-gray-400" />
                                 <div className={`${i18n.language === 'ar' ? 'mr-3' : 'ml-3'}`}>
@@ -441,13 +622,15 @@ const Navbar = () => {
                                 </div>
                             </div>
                             <div className="mt-3 space-y-1">
-                                <Link
-                                    to="/admin"
-                                    className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-50"
-                                    onClick={() => setIsOpen(false)}
-                                >
-                                    {t('dashboard.title')}
-                                </Link>
+                                {user?.role === 'owner' && (
+                                    <Link
+                                        to="/owner"
+                                        className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-50"
+                                        onClick={() => setIsOpen(false)}
+                                    >
+                                        {t('dashboard.title')}
+                                    </Link>
+                                )}
                                 <Link
                                     to="/profile"
                                     className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-50"

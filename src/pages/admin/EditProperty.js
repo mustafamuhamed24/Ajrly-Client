@@ -50,10 +50,10 @@ const EditProperty = () => {
                 updatedProperty[editingField] = editValue;
             }
 
-            console.log('Submitting update:', updatedProperty);
-
             // Create FormData for image upload
             const formData = new FormData();
+
+            // Add the entire property data as a single JSON string
             formData.append('data', JSON.stringify(updatedProperty));
 
             // Add new images
@@ -66,14 +66,16 @@ const EditProperty = () => {
                 formData.append('removedImages', JSON.stringify(removedImages));
             }
 
-            await adminService.updateProperty(id, formData);
-            setProperty(updatedProperty);
+            const response = await adminService.updateProperty(id, formData);
+            setProperty(response); // Use the response from the server
             setEditingField(null);
             setNewImages([]);
             setRemovedImages([]);
+            setError(''); // Clear any previous errors
         } catch (err) {
-            setError('Failed to update property');
-            console.error('Update property error:', err);
+            const errorMessage = err.response?.data?.message || err.message || 'Failed to update property';
+            setError(errorMessage);
+            console.error('Update property error:', err.response?.data || err);
         } finally {
             setLoading(false);
         }
@@ -107,7 +109,7 @@ const EditProperty = () => {
                 <div className="flex justify-between items-center">
                     <h1 className="text-3xl font-bold">Edit Property</h1>
                     <button
-                        onClick={() => navigate('/admin')}
+                        onClick={() => navigate('/owner')}
                         className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors"
                     >
                         Back to Dashboard

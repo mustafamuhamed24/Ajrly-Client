@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useAuth } from './AuthContext';
 import { API_BASE_URL, API_ENDPOINTS } from '../config';
 import { toast } from 'react-hot-toast';
-import { io as socketIOClient } from 'socket.io-client';
+import { socketService } from '../services/socketService';
 
 const ChatContext = createContext();
 
@@ -16,7 +16,8 @@ export const ChatProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [unreadCount, setUnreadCount] = useState(0);
-    const [socket, setSocket] = useState(null);
+    const [notifications, setNotifications] = useState([]);
+    const [userStatus, setUserStatus] = useState({});
 
     // Fetch all chats for the current user
     const fetchChats = async () => {
@@ -94,7 +95,7 @@ export const ChatProvider = ({ children }) => {
                 _id: Date.now().toString(), // Temporary ID
                 content,
                 sender: {
-                    _id: user.id,
+                    _id: user._id,
                     name: user.name,
                     avatar: user.avatar
                 },
@@ -123,7 +124,7 @@ export const ChatProvider = ({ children }) => {
             const response = await axios.post(`${API_BASE_URL}${API_ENDPOINTS.CHAT.MESSAGES(chatId)}`, {
                 content,
                 sender: {
-                    _id: user.id,
+                    _id: user._id,
                     name: user.name,
                     avatar: user.avatar
                 }
@@ -204,76 +205,133 @@ export const ChatProvider = ({ children }) => {
         }
     };
 
-    // Real-time: Setup Socket.IO client
+    // Real-time: Listen for new messages via socket and update chat state
     useEffect(() => {
-        if (!user || !token) return;
-
-        // Connect to Socket.IO server with authentication
-        const socket = socketIOClient(API_BASE_URL.replace(/\/api.*/, ''), {
-            auth: { token },
-            reconnection: true,
-            reconnectionAttempts: 5,
-            reconnectionDelay: 1000
-        });
-
-        setSocket(socket);
-
-        // Listen for new chat messages
-        socket.on('chat:newMessage', ({ chatId, chat }) => {
-            setChats(prev => {
-                const idx = prev.findIndex(c => c._id === chatId);
-                let updated;
-                if (idx >= 0) {
-                    updated = [...prev];
-                    updated[idx] = chat;
-                } else {
-                    updated = [chat, ...prev];
-                }
-                // Recalculate unread count
-                const unread = updated.reduce((count, c) => {
-                    return count + (c.messages?.filter(m =>
-                        !m.read && m.sender._id !== user.id
-                    ).length || 0);
-                }, 0);
-                setUnreadCount(unread);
-                return updated;
-            });
-
-            // Update current chat if it's the active one
-            setCurrentChat(prev => {
-                if (prev?._id === chatId) {
+        const unsubscribe = socketService.onMessage((data) => {
+            // Update the chat in the chats list
+            setChats(prevChats => {
+                return prevChats.map(chat => {
+                    if (chat._id === data.chatId) {
+                        return {
+                            ...chat,
+                            messages: [...(chat.messages || []), data.message],
+                            lastMessage: data.message.createdAt
+                        };
+                    }
                     return chat;
+                });
+            });
+            // If the current chat is open, update it too
+            setCurrentChat(prev => {
+                if (prev && prev._id === data.chatId) {
+                    return {
+                        ...prev,
+                        messages: [...(prev.messages || []), data.message],
+                        lastMessage: data.message.createdAt
+                    };
                 }
                 return prev;
             });
+            // Show notification if the chat is not open and the message is not from the current user
+            if (!currentChat || currentChat._id !== data.chatId) {
+                const senderId = typeof data.message.sender === 'object' ? (data.message.sender._id || data.message.sender.id) : data.message.sender;
+                const userId = user?._id || user?.id;
+                if (String(senderId) !== String(userId)) {
+                    toast.success(`New message from ${data.message.sender.name || 'User'}`);
+                    setUnreadCount(prev => prev + 1);
+                    // Add to notifications array
+                    setNotifications(prev => [
+                        {
+                            id: data.message._id,
+                            chatId: data.chatId,
+                            sender: data.message.sender.name || 'User',
+                            content: data.message.content,
+                            createdAt: data.message.createdAt
+                        },
+                        ...prev
+                    ]);
+                }
+            }
         });
+        return () => unsubscribe();
+    }, [currentChat, user]);
 
-        // Handle connection errors
-        socket.on('connect_error', (error) => {
-            console.error('Socket connection error:', error);
-            setError('Connection error. Please check your internet connection.');
-        });
-
-        // Handle reconnection
-        socket.on('reconnect', (attemptNumber) => {
-            console.log('Socket reconnected after', attemptNumber, 'attempts');
-            fetchChats(); // Refresh chats after reconnection
-        });
-
-        return () => {
-            socket.disconnect();
+    useEffect(() => {
+        socketService.connect();
+        const handleUserOnline = ({ userId }) => {
+            setUserStatus(prev => ({
+                ...prev,
+                [userId]: { online: true, lastSeen: null }
+            }));
         };
-    }, [user, token]);
+        const handleUserOffline = ({ userId, lastSeen }) => {
+            setUserStatus(prev => ({
+                ...prev,
+                [userId]: { online: false, lastSeen }
+            }));
+        };
+        if (socketService.socket) {
+            socketService.socket.on('user_online', handleUserOnline);
+            socketService.socket.on('user_offline', handleUserOffline);
+        }
+        return () => {
+            if (socketService.socket) {
+                socketService.socket.off('user_online', handleUserOnline);
+                socketService.socket.off('user_offline', handleUserOffline);
+            }
+        };
+    }, []);
 
-    // Poll for new messages
+    // Fetch user status for a list of userIds
+    const fetchUserStatus = async (userIds) => {
+        try {
+            const res = await fetch(`${API_BASE_URL}/users/status`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({ userIds })
+            });
+            const contentType = res.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+                throw new Error('Invalid response type');
+            }
+            const data = await res.json();
+            setUserStatus(prev => {
+                const updated = { ...prev };
+                data.forEach(({ userId, online, lastSeen }) => {
+                    updated[userId] = { online, lastSeen };
+                });
+                return updated;
+            });
+        } catch (error) {
+            console.error('Error fetching user status:', error);
+            // Fallback: set all requested userIds to unknown
+            setUserStatus(prev => {
+                const updated = { ...prev };
+                userIds.forEach(userId => {
+                    updated[userId] = { online: false, lastSeen: null };
+                });
+                return updated;
+            });
+        }
+    };
+
+    // Poll for new messages (fallback, every 5 minutes instead of 30 seconds)
+    /*
     useEffect(() => {
         if (!user || !token) return;
 
         fetchChats();
-        const interval = setInterval(fetchChats, 30000); // Poll every 30 seconds
+        const interval = setInterval(fetchChats, 300000); // Poll every 5 minutes
 
         return () => clearInterval(interval);
     }, [user, token]);
+    */
+
+    // Function to clear notifications
+    const clearNotifications = () => setNotifications([]);
 
     const value = {
         chats,
@@ -284,7 +342,11 @@ export const ChatProvider = ({ children }) => {
         createOrGetChat,
         sendMessage,
         setActiveChat,
-        fetchChats
+        fetchChats,
+        notifications,
+        clearNotifications,
+        userStatus,
+        fetchUserStatus
     };
 
     return (
